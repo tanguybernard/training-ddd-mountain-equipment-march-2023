@@ -1,6 +1,5 @@
 import express from "express";
-import {helloController} from "../factory";
-import BcDemoFactory from "../../bc-demo-factory";
+import CarPoolFactory from "./../../car-pool-factory";
 const router = express.Router();
 /*
 router.get('/world',
@@ -8,6 +7,6 @@ router.get('/world',
 */
 
 
-router.get('/world',BcDemoFactory.getHelloZenika())
+router.get('/world',CarPoolFactory.getHelloZenika())
 
 export default router

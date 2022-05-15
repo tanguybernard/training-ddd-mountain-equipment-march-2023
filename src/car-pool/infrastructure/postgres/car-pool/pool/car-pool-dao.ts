@@ -1,8 +1,7 @@
-import {Repository} from "typeorm";
-import {Organization} from "./organization";
-import {AppDataSource} from "../../../../data-source";
+import {AppDataSource} from "../../../../../data-source";
+import {CarPoolDto} from "./car-pool-dto";
 
-export default AppDataSource.getRepository(Organization).extend({
+export default AppDataSource.getRepository(CarPoolDto).extend({
 
     findByYourOwnQuery(firstName: string, lastName: string) {
         return this.createQueryBuilder("user")

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon --watch src -e js,ts,json --exec \"ts-node src/index.ts\"",
     "test": "NODE_ENV=test jest",
-    "test:watch": "NODE_ENV=test jest --watch"
+    "test:watch": "NODE_ENV=test jest --watch",
+    "build": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "@types/jest": "^27.5.0",
     "@types/node": "^17.0.32",
     "@types/supertest": "^2.0.12",
+    "@types/uuid": "^8.3.4",
     "nodemon": "^2.0.16",
     "supertest": "^6.2.3",
     "ts-jest": "^28.0.2",
@@ -32,10 +34,12 @@
   "dependencies": {
     "config": "^3.3.7",
     "express": "^4.18.1",
+    "module-alias": "^2.2.2",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.0.8",
-    "typeorm": "^0.3.6"
+    "typeorm": "^0.3.6",
+    "uuid": "^8.3.2"
   },
   "resolutions": {
     "tslib": "2.0.0"

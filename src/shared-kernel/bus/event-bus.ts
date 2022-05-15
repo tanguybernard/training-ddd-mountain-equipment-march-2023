@@ -1,7 +1,9 @@
 import { DomainEvent } from "./domain-event";
+import EventHandler from "./event-handler";
 
 export default interface EventBus {
 
-publish(domainEvents : DomainEvent[]) : void
+    subscribe(eventClass, eventHandler: EventHandler): void
+    publish(domainEvents : DomainEvent[]) : void
 
 }

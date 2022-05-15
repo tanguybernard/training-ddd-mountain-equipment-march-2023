@@ -1,7 +1,8 @@
+import 'module-alias/register';
 import {initServer} from "./app";
 import { PORT } from './env';
 import {AppDataSource} from "./data-source";
-import {Organization} from "./bc-demo/infrastructure/postgres/organization/organization";
+import {Organization} from "./car-pool/infrastructure/postgres/organization/organization";
 
 AppDataSource.initialize().then(async () => {
 
