@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es2017",
+    "module": "CommonJS",
+    "lib": ["es5", "es6", "es7",
+      "es2015", "es2016",
+      "es2017", "es2018",
+      "esnext"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": false,
+    "strictNullChecks": false,
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "./dist",
+    "strictPropertyInitialization": false
+  }
+}

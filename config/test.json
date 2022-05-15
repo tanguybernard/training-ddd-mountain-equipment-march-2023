@@ -1,0 +1,6 @@
+{
+  "port": 3001,
+  "db-user": "postgres",
+  "db-password": "password",
+  "db-name": "test"
+}
