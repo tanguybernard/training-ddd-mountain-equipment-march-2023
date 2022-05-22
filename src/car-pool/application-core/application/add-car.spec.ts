@@ -31,7 +31,7 @@ describe(`${AddCar.name}`, () => {
         const name = new CarName('Fiat Punto');
         // When
         try {
-            const carPool = await useCase.add(new CarPoolName('Family Car'),name);
+            await useCase.add(new CarPoolName('Family Car'),name);
         }
         catch (e){
             // Then

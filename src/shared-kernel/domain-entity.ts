@@ -1,8 +1,7 @@
-export abstract class DomainEntity<ValueObjectId> {
-  constructor(protected readonly id: ValueObjectId) {
-  }
+import {ValueObject} from "./value-object";
 
-  equals(entity: DomainEntity<ValueObjectId>) {
-    return this.id === entity.id;
+export abstract class DomainEntity<ValueObjectId> extends ValueObject<ValueObjectId> {
+  constructor(protected readonly id: ValueObjectId) {
+    super(id);
   }
 }
