@@ -2,24 +2,32 @@ import 'module-alias/register';
 import {initServer} from "./app";
 import { PORT } from './env';
 import {AppDataSource} from "./data-source";
-import {Organization} from "./car-pool/infrastructure/postgres/organization/organization";
+import {CarPoolDto} from "./registration/infrastructure/postgres/car-pool/pool/car-pool-dto";
+import {AfterCarUpdatedSubscriber} from "./registration/infrastructure/bus/subscribers/after-car-updated-subscriber";
+
 
 AppDataSource.initialize().then(async () => {
 
     console.log("Inserting a new orga into the database...")
-    const orga = new Organization()
-    orga.name = "Star Trek"
-    await AppDataSource.manager.save(orga)
-    console.log("Saved a new orga with id: " + orga.id)
+    const carPool = new CarPoolDto()
 
-    console.log("Loading organizations from the database...")
-    const organizations = await AppDataSource.manager.find(Organization)
-    console.log("Loaded organizations: ", organizations)
+    carPool.name = "Star Trek"
+    await AppDataSource.manager.save(carPool)
+    console.log("Saved a new carPool with id: " + carPool.id)
+
+    console.log("Loading carPoolnizations from the database...")
+    const carPoolFound = await AppDataSource.manager.find(CarPoolDto)
+    console.log("Loaded carPool: ", carPoolFound);
+
 
 }).catch(error => console.log(error))
 
 //new WrapperSubscriber(configBusBCAdmin)
 //wrapper.listen()
+
+const carUpdatedSubscriber = new AfterCarUpdatedSubscriber();
+carUpdatedSubscriber.setupSubscriptions();
+
 
 const server =  initServer().listen(PORT, () => {
     console.log(`[${process.env.NODE_ENV}] Server is listening on port ${PORT}`);

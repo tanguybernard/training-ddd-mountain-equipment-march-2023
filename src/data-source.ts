@@ -1,7 +1,7 @@
 import {DataSource} from "typeorm";
 import {DB_PASSWORD, DB_USER} from "./env";
-import {CarPoolDto} from "./car-pool/infrastructure/postgres/car-pool/pool/car-pool-dto";
-import CarDto from "./car-pool/infrastructure/postgres/car-pool/car/car-dto";
+import {CarPoolDto} from "./registration/infrastructure/postgres/car-pool/pool/car-pool-dto";
+import CarDto from "./registration/infrastructure/postgres/car-pool/car/car-dto";
 
 export const AppDataSource =
     process.env.NODE_ENV === 'test'
@@ -12,7 +12,7 @@ export const AppDataSource =
             dropSchema: true,
             entities: [CarPoolDto, CarDto],
             synchronize: true,
-            logging: false
+            logging: false//'all'
         })
         :
         new DataSource({

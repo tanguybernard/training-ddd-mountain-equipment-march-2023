@@ -1,7 +1,7 @@
 import express from 'express'
 import * as http from "http";
 import {Server} from "http";
-import hello from './car-pool/presentation/rest/hello-routes';
+import hello from './registration/presentation/rest/hello-routes';
 
 export function initServer(): Server {
     const app = express();
