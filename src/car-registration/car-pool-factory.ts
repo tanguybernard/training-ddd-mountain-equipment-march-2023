@@ -7,7 +7,6 @@ import CarDao from "./infrastructure/postgres/car-pool/car/car-dao";
 import CarPoolPgRepository from "./infrastructure/postgres/car-pool/pool/car-pool-repository";
 import CarPoolMapper from "./infrastructure/postgres/car-pool/pool/car-pool-mapper";
 
-
 export default class CarPoolFactory {
 
     private static useCaseGetHelloZenika(): GetHelloZenika {
@@ -17,7 +16,6 @@ export default class CarPoolFactory {
     static carPoolRepository() : CarPoolRepository {
         return new CarPoolPgRepository(CarPoolDao, CarDao, new CarPoolMapper());
     }
-
 
     static getHelloZenika(): RequestHandler {
         return helloController.getHelloWorld(this.useCaseGetHelloZenika())

@@ -1,7 +1,7 @@
 import {DataSource} from "typeorm";
 import {DB_PASSWORD, DB_USER} from "./env";
-import {CarPoolDto} from "./registration/infrastructure/postgres/car-pool/pool/car-pool-dto";
-import CarDto from "./registration/infrastructure/postgres/car-pool/car/car-dto";
+import {CarPoolDto} from "./car-registration/infrastructure/postgres/car-pool/pool/car-pool-dto";
+import CarDto from "./car-registration/infrastructure/postgres/car-pool/car/car-dto";
 
 export const AppDataSource =
     process.env.NODE_ENV === 'test'
