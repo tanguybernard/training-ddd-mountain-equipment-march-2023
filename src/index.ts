@@ -3,11 +3,13 @@ import {initServer} from "./app";
 import { PORT } from './env';
 import {AppDataSource} from "./data-source";
 import {CarPoolDto} from "./car-registration/infrastructure/postgres/car-pool/pool/car-pool-dto";
-import {AfterCarUpdatedSubscriber} from "./car-registration/infrastructure/bus/subscribers/after-car-updated-subscriber";
-import {DomainEventsV2} from "./shared-kernel/bus/domain-events-v2";
-import CarRentedEvent from "./leasing/application-core/user/domain/events/car-rented-event";
+import {DomainEvents} from "./shared-kernel/domain-event-dispatching/domain-events";
+import CarRentedEvent from "./leasing/application-core/driver/domain/events/car-rented-event";
 import CarRentedEventHandler
-    from "./leasing/application-core/leasing/application/event-handlers/car-rented-event-handler";
+    from "./leasing/application-core/car/application/event-handlers/car-rented-event-handler";
+import CarAddedToPoolEventHandler
+    from "./leasing/application-core/car/application/event-handlers/car-added-to-pool-event-handler";
+import CarAddedEvent from "./leasing/application-core/driver/domain/events/car-added-event";
 
 
 AppDataSource.initialize().then(async () => {
@@ -26,12 +28,8 @@ AppDataSource.initialize().then(async () => {
 
 }).catch(error => console.log(error))
 
-// Domain event
-// Subscriber, register himself
-const carUpdatedSubscriber = new AfterCarUpdatedSubscriber();
-carUpdatedSubscriber.setupSubscriptions();
-// or declare explicitly
-DomainEventsV2.register(new CarRentedEventHandler(), CarRentedEvent.name);
+DomainEvents.register(new CarRentedEventHandler(), CarRentedEvent.name);
+DomainEvents.register(new CarAddedToPoolEventHandler(), CarAddedEvent.name);
 
 
 const server =  initServer().listen(PORT, () => {

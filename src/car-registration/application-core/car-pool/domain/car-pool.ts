@@ -1,11 +1,11 @@
 import {AggregateRoot} from "../../../../shared-kernel/aggregate-root";
 import CarPoolId from "./car-pool-id";
-import CarAddedToPool from "./car-added-to-pool";
 import {CarPoolName} from "./car-pool-name";
 import Car from "./car";
 import CarId from "./car-id";
 import CarName from "./car-name";
-import UpdatedCarEvent from "./updated-car-event";
+import UpdatedCarEvent from "./events/updated-car-event";
+import CarAddedToPoolDomainEvent from "./events/car-added-to-pool-domain-event";
 
 export default class CarPool extends AggregateRoot<CarPoolId>{
 
@@ -17,9 +17,9 @@ export default class CarPool extends AggregateRoot<CarPoolId>{
         return new CarPool(id, name, cars);
     }
 
-    add(){
-        this.record(new CarAddedToPool(this.id))
-
+    addCar(car: Car){
+        this.cars.push(car);
+        this.record(new CarAddedToPoolDomainEvent(this.id))//add field to this event (name, brand...)
     }
 
     getCar(carId) : Car {

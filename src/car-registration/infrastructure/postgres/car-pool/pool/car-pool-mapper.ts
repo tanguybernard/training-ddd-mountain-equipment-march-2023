@@ -17,7 +17,8 @@ export default class CarPoolMapper{
                 car => Car.create(
                     new CarId(car.id),
                     new CarName(car.name),
-                    new CarBrand(car.brand)
+                    new CarBrand(car.brand),
+                    new Date()
                 )
             )
         )

@@ -1,7 +1,7 @@
 import {Column, Entity, OneToMany, PrimaryColumn} from "typeorm";
 import CarDto from "../car/car-dto";
 
-@Entity({name: "car_pool"})
+@Entity({name: "car_pool", schema: "registration"})
 export class CarPoolDto {
     @PrimaryColumn('uuid') //or @PrimaryGeneratedColumn() for id generated
     id: string

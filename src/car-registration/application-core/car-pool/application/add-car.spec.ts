@@ -8,7 +8,8 @@ import connection from "../../../../../tests/utils/connection";
 import {CarPoolDto} from "../../../infrastructure/postgres/car-pool/pool/car-pool-dto";
 import {v4 as uuidv4} from "uuid";
 import CarDto from "../../../infrastructure/postgres/car-pool/car/car-dto";
-
+import CarBrand from "../domain/car-brand";
+import {RabbitEventBus} from "../../../infrastructure/bus/RabbitEventBus";
 
 describe(`${AddCar.name}`, () => {
     let useCase: AddCar;
@@ -23,15 +24,16 @@ describe(`${AddCar.name}`, () => {
 
     beforeEach(async () => {
         await connection.clear();
-        useCase = new AddCar(CarPoolFactory.carPoolRepository());
+        useCase = new AddCar(CarPoolFactory.carPoolRepository(), new RabbitEventBus());
     });
 
     it('should throw an exception if car pool does not exist', async () => {
         // Given
         const name = new CarName('Fiat Punto');
+        const brand = new CarBrand('Fiat');
         // When
         try {
-            await useCase.add(new CarPoolName('Family Car'),name);
+            await useCase.add(new CarPoolName('Family Car'),name, brand);
         }
         catch (e){
             // Then
@@ -43,6 +45,7 @@ describe(`${AddCar.name}`, () => {
     it('should add a car to the pool', async () => {
         // Given
         const carName = new CarName('C4');
+        const carBrand = new CarBrand('Citroen');
 
         const poolName = new CarPoolName('Family Car');
         const carPoolEntity = new CarPoolDto();
@@ -52,14 +55,10 @@ describe(`${AddCar.name}`, () => {
         await AppDataSource.getRepository(CarPoolDto)
             .save(carPoolEntity)
 
-
-        console.log(carPoolEntity)
-
         // When
-        await useCase.add(poolName, carName);
+        await useCase.add(poolName, carName, carBrand);
 
         // Then
-
         const dtoCar = await AppDataSource.getRepository(CarDto).findOne({
             where: {
                 poolId: carPoolEntity

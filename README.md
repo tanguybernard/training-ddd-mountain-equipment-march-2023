@@ -1,9 +1,20 @@
 # DDD Training Template Typescript
 
-WORK IN PROGRESS
+<h1>WORK IN PROGRESS</h1>
 
 Separation between domain event and integration event
 
+
+## Goal : Leasing car
+
+Two BC REgistration and Leasing
+
+Pool of car leasing, or to repair before leasing
+
+Add car, integration event  => consumer leasing BC to be rented
+
+
+Domain event: Driver(Aggregate) rent car => Car(Aggregate) status updated to RENTED
 
 ## Skeleton
 
@@ -33,6 +44,10 @@ When is release the car, a domain event is emmited, the user status change to "F
 
 Example:
 
+https://www.mirkosertic.de/blog/2013/04/domain-driven-design-example/
+
+Example library:
+
 https://github.com/ddd-cqrs-es/BookLibrary/blob/master/BookingLibrary.Domain.Core/AggregateRoot.cs
 
 https://github.com/ddd-cqrs-es/BookLibrary/tree/master/BookingLibrary.Domain.Core
@@ -51,7 +66,12 @@ Domain event
 
 https://lostechies.com/jimmybogard/2010/04/08/strengthening-your-domain-domain-events/
 
+https://udidahan.com/2009/06/14/domain-events-salvation/
+
+https://khalilstemmler.com/articles/typescript-domain-driven-design/chain-business-logic-domain-events/
+
 Domain event vs Integration event:
 
 https://devblogs.microsoft.com/cesardelatorre/domain-events-vs-integration-events-in-domain-driven-design-and-microservices-architectures/
 
+https://github.com/kgrzybek/modular-monolith-with-ddd

@@ -1,13 +1,10 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {CarPoolDto} from "../pool/car-pool-dto";
+import {stat} from "fs";
 
-@Entity({name: "car", schema: "registration"})
+@Entity({name: "car", schema: "leasing"})
 export default class CarDto {
     @PrimaryGeneratedColumn('uuid')
     id: string
-
-    @ManyToOne(() => CarPoolDto, carPool => carPool.cars)
-    poolId: CarPoolDto //TODO rename to carPool
 
     @Column({
         length: 100,
@@ -18,6 +15,13 @@ export default class CarDto {
         length: 100,
         nullable: true
     })
-    brand: string
+    type: string
+
+
+    @Column({
+        length: 100,
+        nullable: true
+    })
+    status: string
 
 }

@@ -19,9 +19,8 @@ export default class CarPoolPgRepository implements CarPoolRepository {
         private mapper: CarPoolMapper) {
     }
 
-    async addCar(poolId: CarPoolId, name: CarName): Promise<void> {
+    async addCar(poolId: CarPoolId, carDomain: Car): Promise<void> {
         //get Pool
-
         const carPool = await this.getPoolById(poolId);
         let carPoolEntity = new CarPoolDto();
         carPoolEntity.name = carPool.name.value;
@@ -29,7 +28,7 @@ export default class CarPoolPgRepository implements CarPoolRepository {
 
 
         let car = new CarDto();
-        car.name = name.value;
+        car.name = carDomain.carName.props;
         car.poolId = carPoolEntity
         await this.carDao.save(car);
     }
@@ -78,7 +77,7 @@ export default class CarPoolPgRepository implements CarPoolRepository {
         const carToUpdate = await this.carDao.findOneBy({
             id: car.carId.props,
         })
-        carToUpdate.name = car.carName.value;
+        carToUpdate.name = car.carName.props;
         carToUpdate.brand = car.carBrand.value;
 
         await this.carDao.save(carToUpdate);
