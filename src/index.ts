@@ -7,9 +7,8 @@ import {DomainEvents} from "./shared-kernel/domain-event-dispatching/domain-even
 import CarRentedEvent from "./leasing/application-core/driver/domain/events/car-rented-event";
 import CarRentedEventHandler
     from "./leasing/application-core/car/application/event-handlers/car-rented-event-handler";
-import CarAddedToPoolEventHandler
-    from "./leasing/application-core/car/application/event-handlers/car-added-to-pool-event-handler";
-import CarAddedEvent from "./leasing/application-core/driver/domain/events/car-added-event";
+import CarPgRepository from "./leasing/infrastructure/postgres/car/car-repository";
+import CarDao from "./leasing/infrastructure/postgres/car/car-dao";
 
 
 AppDataSource.initialize().then(async () => {
@@ -28,8 +27,7 @@ AppDataSource.initialize().then(async () => {
 
 }).catch(error => console.log(error))
 
-DomainEvents.register(new CarRentedEventHandler(), CarRentedEvent.name);
-DomainEvents.register(new CarAddedToPoolEventHandler(), CarAddedEvent.name);
+DomainEvents.register(new CarRentedEventHandler(new CarPgRepository(CarDao)), CarRentedEvent.name);
 
 
 const server =  initServer().listen(PORT, () => {

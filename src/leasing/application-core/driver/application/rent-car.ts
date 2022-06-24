@@ -16,17 +16,13 @@ export default class RentCar {
 
     async rentCar(driverId: DriverId, carId: CarId){
 
-        const driver = await this.driverRepository.getById(driverId);
+        const driver = await this.driverRepository.findById(driverId);
         const car = await this.carRepository.findAvailableCarById(carId);
         if(this.carDomainService.canRentCar(driver, car)){
-            //await this.driverRepository.update(carId); //TODO assign carId to driver ?
-
-            //carRepositoyr.update()... TODO or domain event dispatch event and handler manage to update car status
-
-
+            await this.driverRepository.update(driver);
         }
 
-        //dispatch car rented event, so leasing part, update status of the car to ALREADY_RENTED
+        //dispatch car rented event, in car part, status from AVAILABLE TO RENTED
         driver.pullDomainEvents().map(DomainEvents.dispatch);
     }
 

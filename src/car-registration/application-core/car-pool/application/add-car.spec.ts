@@ -13,7 +13,6 @@ import {RabbitEventBus} from "../../../infrastructure/bus/RabbitEventBus";
 
 describe(`${AddCar.name}`, () => {
     let useCase: AddCar;
-    let init: DataSource;
     beforeAll(async ()=>{
         await connection.create();
     });

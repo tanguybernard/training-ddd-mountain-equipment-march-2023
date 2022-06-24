@@ -1,7 +1,11 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {stat} from "fs";
 
-@Entity({name: "car", schema: "leasing"})
+export enum LeasingStatus {
+    AVAILABLE = 'available',
+    RENTED = 'rented',
+}
+
+@Entity({name: "car_leasing", schema: "leasing"}) //schema not supported by sqlite
 export default class CarDto {
     @PrimaryGeneratedColumn('uuid')
     id: string
@@ -19,8 +23,9 @@ export default class CarDto {
 
 
     @Column({
-        length: 100,
-        nullable: true
+        type: 'simple-enum',
+        enum: LeasingStatus,
+        default: LeasingStatus.AVAILABLE
     })
     status: string
 

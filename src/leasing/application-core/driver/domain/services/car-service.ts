@@ -5,10 +5,15 @@ import AvailableCar from "../../../car/domain/available-car";
 export default class CarService {
 
     public canRentCar(driver: Driver, car: AvailableCar) {
-        if(car.type === "LUXUARY" && driver.age < 25){
-            return false
+
+        if(driver.car){
+            return false;
         }
-        driver.rentCar(car.id);
+
+        if(car.type === "LUXUARY" && driver.age < 25){
+            return false;
+        }
+        driver.rentCar(car);
         return true;
     }
 }

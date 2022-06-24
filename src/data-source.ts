@@ -2,6 +2,8 @@ import {DataSource} from "typeorm";
 import {DB_PASSWORD, DB_USER} from "./env";
 import {CarPoolDto} from "./car-registration/infrastructure/postgres/car-pool/pool/car-pool-dto";
 import CarDto from "./car-registration/infrastructure/postgres/car-pool/car/car-dto";
+import DriverDto from "./leasing/infrastructure/postgres/driver/driver-dto";
+import CarLeasingDto from "./leasing/infrastructure/postgres/car/car-dto";
 
 export const AppDataSource =
     process.env.NODE_ENV === 'test'
@@ -10,7 +12,7 @@ export const AppDataSource =
             type: "sqlite",
             database: ":memory:",
             dropSchema: true,
-            entities: [CarPoolDto, CarDto],
+            entities: [CarPoolDto, CarDto, DriverDto, CarLeasingDto],
             synchronize: true,
             logging: false//'all'
         })
@@ -24,7 +26,7 @@ export const AppDataSource =
             database: "mydb",
             synchronize: true,
             logging: false,
-            entities: [CarPoolDto, CarDto],
+            entities: [CarPoolDto, CarDto, DriverDto, CarLeasingDto],
             subscribers: [],
             migrations: [],
         });

@@ -28,8 +28,6 @@ export class DomainEvents {
     }
 
     public static dispatch (event: DomainEvent): void {
-        console.log(event.constructor.name)
-
         const eventClassName: string = event.constructor.name;
 
 

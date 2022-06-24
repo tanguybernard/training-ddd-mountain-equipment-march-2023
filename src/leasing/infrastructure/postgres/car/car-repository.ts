@@ -4,17 +4,39 @@ import AvailableCar from "../../../application-core/car/domain/available-car";
 import Car from "../../../application-core/car/domain/car";
 import CarDto from "./car-dto";
 import RentedCar from "../../../application-core/car/domain/rented-car";
+import {Repository} from "typeorm";
+import CarPoolNotExist from "../../../../car-registration/application-core/car-pool/domain/car-pool-not-exist";
 
 export default class CarPgRepository implements CarRepository {
-    findAvailableCarById(carId: CarId): Promise<AvailableCar> {
-        return Promise.resolve(undefined);
+
+    constructor(private carDao: Repository<CarDto>) {
     }
 
-    findCarById(carId: CarId): Promise<Car> {
-        return Promise.resolve(undefined);
+    async findAvailableCarById(carId: CarId): Promise<AvailableCar> {
+        const car = await this.carDao.findOneBy({
+            id: carId.props,
+            status: "available"
+        })
+
+        if (car) {
+            //mapper
+            return AvailableCar.load(new CarId(car.id), car.type);
+        }
+        throw new Error("available car not found")
     }
 
-    updateCar(carDomain: Car): Promise<void> {
+    async findCarById(carId: CarId): Promise<Car> {
+        const car = await this.carDao.findOneBy({
+            id: carId.props,
+        })
+
+        if (car) {
+            return Car.create(new CarId(car.id), car.type);
+        }
+        throw new Error("")
+    }
+
+    async updateCar(carDomain: Car): Promise<void> {
 
         const carDto = new CarDto();
         carDto.id = carDomain.id.props;
@@ -22,12 +44,12 @@ export default class CarPgRepository implements CarRepository {
         //...
 
         if(carDomain instanceof AvailableCar){
-            carDto.status = "AVAILABLE"
+            carDto.status = "available"
         }
         else if(carDomain instanceof RentedCar){
-            carDto.status = "RENTED"
+            carDto.status = "rented"
         }
-        return;
+        await this.carDao.save(carDto);
     }
 
 

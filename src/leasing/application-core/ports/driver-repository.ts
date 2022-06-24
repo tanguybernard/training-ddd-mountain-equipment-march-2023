@@ -4,6 +4,7 @@ import DriverId from "../driver/domain/driver-id";
 
 export default interface DriverRepository {
 
-    getById(driverId: DriverId): Driver;
+    findById(driverId: DriverId): Promise<Driver>;
+    update(driver: Driver): Promise<void>
 
 }
