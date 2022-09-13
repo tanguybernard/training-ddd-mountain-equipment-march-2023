@@ -13,8 +13,8 @@ Pool of car leasing, or to repair before leasing
 
 Add car, integration event  => consumer leasing BC to be rented
 
+See: _CarReadyToRentIntegrationEvent_
 
-Domain event: Driver(Aggregate) rent car => Car(Aggregate) status updated to RENTED
 
 ## Skeleton
 
@@ -37,6 +37,11 @@ Idea for a domain event:
 
 A user rent a car, the status of user is update to Car Rented.
 When is release the car, a domain event is emmited, the user status change to "FreeToRentACar"
+
+Domain event: Driver(Aggregate) rent car => Car(Aggregate) status updated to RENTED
+
+
+See: CarRentedEvent
 
 
 ## Credits
