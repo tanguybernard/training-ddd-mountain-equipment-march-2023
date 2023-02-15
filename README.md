@@ -7,7 +7,7 @@ Separation between domain event and integration event
 
 ## Goal : Leasing car
 
-Two BC REgistration and Leasing
+Two BC Registration and Leasing
 
 Pool of car leasing, or to repair before leasing
 
@@ -43,6 +43,16 @@ Domain event: Driver(Aggregate) rent car => Car(Aggregate) status updated to REN
 
 See: CarRentedEvent
 
+
+## Command
+
+Run integration test with sqlite memory (db)
+
+    npm run test:integration
+
+Run unit test
+
+    npm run test
 
 ## Credits
 
