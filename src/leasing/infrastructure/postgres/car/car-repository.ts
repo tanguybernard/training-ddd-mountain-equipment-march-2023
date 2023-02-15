@@ -5,7 +5,6 @@ import Car from "../../../application-core/car/domain/car";
 import CarDto from "./car-dto";
 import RentedCar from "../../../application-core/car/domain/rented-car";
 import {Repository} from "typeorm";
-import CarPoolNotExist from "../../../../car-registration/application-core/car-pool/domain/car-pool-not-exist";
 
 export default class CarPgRepository implements CarRepository {
 

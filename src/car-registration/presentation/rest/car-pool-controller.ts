@@ -3,7 +3,6 @@ import AddCar from "../../application-core/car-pool/application/add-car";
 import {validationResult} from "express-validator";
 import CarBrand from "../../application-core/car-pool/domain/car-brand";
 import CarName from "../../application-core/car-pool/domain/car-name";
-import {CarPoolName} from "../../application-core/car-pool/domain/car-pool-name";
 
 export default class CarPoolController{
 
@@ -17,7 +16,7 @@ export default class CarPoolController{
             }
 
             await useCase.add(
-                new CarPoolName(req.params['pool-name']),
+                req.body.vin,
                 new CarName(req.body.name),
                 new CarBrand(req.body.brand)
             );

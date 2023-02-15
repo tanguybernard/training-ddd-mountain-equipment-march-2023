@@ -1,6 +1,5 @@
 import {AppDataSource} from "../../../../../data-source";
-import {CarPoolDto} from "./car-pool-dto";
-
+/*
 export default AppDataSource.getRepository(CarPoolDto).extend({
 
     findByYourOwnQuery(firstName: string, lastName: string) {
@@ -10,3 +9,4 @@ export default AppDataSource.getRepository(CarPoolDto).extend({
             .getMany()
     },
 })
+*/

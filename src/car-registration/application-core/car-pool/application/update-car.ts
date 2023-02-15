@@ -1,26 +1,27 @@
-import CarPoolRepository from "../../ports/car-pool-repository";
+import CarRepository from "../../ports/car-repository";
 import UpdateCarDto from "./update-car-dto";
 import {DomainEvents} from "../../../../shared-kernel/domain-event-dispatching/domain-events";
+import CarNotFound from "../domain/car-not-found";
 
 export default class UpdateCar {
 
     // car pool repository manage aggregate, so a carRepository have no sense
-    constructor(public carPoolRepository: CarPoolRepository) {
+    constructor(public carPoolRepository: CarRepository) {
 
     }
 
     async update(carDto: UpdateCarDto): Promise<void> {
 
-        const carPool = await this.carPoolRepository.getPoolById(carDto.carPoolId);
+        const car = await this.carPoolRepository.getCar(carDto.carId);
 
-        if(carDto.carName) {
-            carPool.updateCarName(carDto.carId, carDto.carName)
+        if(car === null) {
+            throw new CarNotFound("Car not found");
         }
-        const car = carPool.getCar(carDto.carId);
+
+        car.carName = carDto.carName
+
         await this.carPoolRepository.updateCar(car);
 
-        const events =  carPool.pullDomainEvents()
-        events.forEach(event =>  DomainEvents.dispatch(event));
     }
 
 }

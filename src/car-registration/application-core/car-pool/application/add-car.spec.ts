@@ -1,12 +1,8 @@
 import CarPoolFactory from "../../../car-pool-factory";
-import {CarPoolName} from "../domain/car-pool-name";
 import {AppDataSource} from "../../../../data-source";
-import {DataSource} from "typeorm";
 import AddCar from "./add-car";
 import CarName from "../domain/car-name";
 import connection from "../../../../../tests/utils/connection";
-import {CarPoolDto} from "../../../infrastructure/postgres/car-pool/pool/car-pool-dto";
-import {v4 as uuidv4} from "uuid";
 import CarDto from "../../../infrastructure/postgres/car-pool/car/car-dto";
 import CarBrand from "../domain/car-brand";
 import {RabbitEventBus} from "../../../infrastructure/bus/RabbitEventBus";
@@ -23,48 +19,44 @@ describe(`${AddCar.name}`, () => {
 
     beforeEach(async () => {
         await connection.clear();
-        useCase = new AddCar(CarPoolFactory.carPoolRepository(), new RabbitEventBus());
+        useCase = new AddCar(CarPoolFactory.carRepository(), new RabbitEventBus());
     });
 
-    it('should throw an exception if car pool does not exist', async () => {
+    it('should throw an exception if car already exist', async () => {
         // Given
         const name = new CarName('Fiat Punto');
         const brand = new CarBrand('Fiat');
+        await useCase.add("VFS1V2009ASIV2009",name, brand);
+
         // When
         try {
-            await useCase.add(new CarPoolName('Family Car'),name, brand);
+            await useCase.add("VFS1V2009ASIV2009",name, brand);
         }
         catch (e){
             // Then
-            expect(e.message).toEqual('Pool does not exist !');
+            expect(e.message).toEqual('Car already exist !');
 
         }
     })
 
-    it('should add a car to the pool', async () => {
+    it('should add a car', async () => {
         // Given
         const carName = new CarName('C4');
         const carBrand = new CarBrand('Citroen');
 
-        const poolName = new CarPoolName('Family Car');
-        const carPoolEntity = new CarPoolDto();
-        carPoolEntity.id = uuidv4()
-        carPoolEntity.name = 'Family Car';
-
-        await AppDataSource.getRepository(CarPoolDto)
-            .save(carPoolEntity)
 
         // When
-        await useCase.add(poolName, carName, carBrand);
+        await useCase.add("VFS1V2009ASIV2009", carName, carBrand);
 
         // Then
         const dtoCar = await AppDataSource.getRepository(CarDto).findOne({
             where: {
-                poolId: carPoolEntity
+                id: "VFS1V2009ASIV2009"
             }
         })
         expect(dtoCar).toEqual(
             expect.objectContaining({
+                id: "VFS1V2009ASIV2009",
                 name: 'C4',
                 brand: null
             })

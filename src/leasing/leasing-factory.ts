@@ -4,12 +4,18 @@ import DriverPgRepository from "./infrastructure/postgres/driver/driver-reposito
 import CarPgRepository from "./infrastructure/postgres/car/car-repository";
 import DriverDao from "./infrastructure/postgres/driver/driver-dao";
 import CarDao from "./infrastructure/postgres/car/car-dao";
+import CarRepository from "./application-core/car/ports/car-repository";
 
 
 export default class LeasingFactory {
 
     public static useCaseRentCar(): RentCar {
-        return new RentCar(new CarService(), new DriverPgRepository(DriverDao), new CarPgRepository(CarDao));
+        return new RentCar(new CarService(), new DriverPgRepository(DriverDao), this.carRepository());
+    }
+
+
+    public static carRepository(): CarRepository{
+        return new CarPgRepository(CarDao)
     }
 
 }

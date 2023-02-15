@@ -1,9 +1,8 @@
 import {DomainEvent} from "../../../../../shared-kernel/domain-event-dispatching/domain-event";
-import CarPoolId from "../car-pool-id";
-
+import CarId from "../../../../../leasing/shared-kernel/domain/car-id";
 export default class UpdatedCarEvent implements DomainEvent{
     public occurredOn: Date;
-    constructor(private aggregateId: CarPoolId) {
+    constructor(private aggregateId: CarId) {
         this.occurredOn = new Date();
     }
 

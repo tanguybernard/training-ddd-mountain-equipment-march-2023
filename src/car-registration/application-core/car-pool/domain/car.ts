@@ -1,16 +1,32 @@
-import {DomainEntity} from "../../../../shared-kernel/domain-entity";
-import CarId from "./car-id";
+import VehicleIdentificationNumber from "./vehicle-identification-number";
 import CarBrand from "./car-brand";
 import CarName from "./car-name";
+import {AggregateRoot} from "../../../../shared-kernel/aggregate-root";
+import CarReadyToBeRented from "./events/car-ready-to-be-rented";
 
-export default class Car extends DomainEntity<CarId>{
+export default class Car extends AggregateRoot<VehicleIdentificationNumber>{
 
-    private constructor(public carId: CarId, public carName: CarName, public carBrand: CarBrand, public technicalControlDate: Date) {
+    private constructor(
+        public carId: VehicleIdentificationNumber,
+        public carName: CarName,
+        public carBrand: CarBrand,
+        public technicalControlDate: Date,
+        public status = ''
+        ) {
         super(carId);
     }
 
-    public static create(carId: CarId, carName: CarName, carBrand: CarBrand, technicalControlDate: Date) {
+    public static create(carId: VehicleIdentificationNumber, carName: CarName, carBrand: CarBrand, technicalControlDate: Date) {
         return new Car(carId, carName, carBrand, technicalControlDate);
+    }
+
+    public static load(carId: VehicleIdentificationNumber, carName: CarName, carBrand: CarBrand, technicalControlDate: Date) {
+        return new Car(carId, carName, carBrand, technicalControlDate);
+    }
+
+    makeReadyToRent(){
+        this.status = 'vehicleReadyForRental'
+        this.record(CarReadyToBeRented);
     }
 
 }

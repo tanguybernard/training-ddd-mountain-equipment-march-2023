@@ -1,5 +1,4 @@
-
-export default class CarPoolNotExist extends Error {
+export default class VinIncorrect extends Error {
 
     constructor(props) {
         super(props);

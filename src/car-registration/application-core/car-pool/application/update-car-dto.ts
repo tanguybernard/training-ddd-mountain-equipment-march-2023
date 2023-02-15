@@ -1,13 +1,10 @@
-import CarPoolId from "../domain/car-pool-id";
-import CarId from "../domain/car-id";
+import VehicleIdentificationNumber from "../domain/vehicle-identification-number";
 import CarName from "../domain/car-name";
 import CarBrand from "../domain/car-brand";
 
 
 export default interface UpdateCarDto {
-
-    carPoolId: CarPoolId;
-    carId: CarId;
+    carId: VehicleIdentificationNumber;
     carName?: CarName;
     carBrand?: CarBrand;
 
