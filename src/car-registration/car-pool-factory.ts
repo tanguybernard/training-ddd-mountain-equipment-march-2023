@@ -27,6 +27,7 @@ export default class CarPoolFactory {
     }
 
     static addCar(): RequestHandler {
+        console.log("INTO AddCAR Handler")
         return carPoolController.addCar(this.useCaseAddCar());
     }
 }

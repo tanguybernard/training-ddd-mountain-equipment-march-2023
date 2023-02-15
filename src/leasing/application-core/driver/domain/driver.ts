@@ -18,7 +18,11 @@ export default class Driver extends AggregateRoot<DriverId>{
         super(driverId);
     }
 
-    public static create(userId, name, licenseNumber, age, car?: Car) {
+    public static create(userId: DriverId, name: string, licenseNumber: string, age: number, car?: Car) {
+        return new Driver(userId, name, licenseNumber, age, car);
+    }
+
+    public static load(userId: DriverId, name: string, licenseNumber: string, age: number, car?: Car) {
         return new Driver(userId, name, licenseNumber, age, car);
     }
 

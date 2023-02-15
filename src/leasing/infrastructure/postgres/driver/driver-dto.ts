@@ -12,6 +12,11 @@ export default class DriverDto {
     name: string
 
     @Column({
+        length: 100,
+    })
+    license: string
+
+    @Column({
         nullable: false
     })
     age: number

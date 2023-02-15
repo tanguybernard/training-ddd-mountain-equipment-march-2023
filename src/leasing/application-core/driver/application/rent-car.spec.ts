@@ -34,6 +34,7 @@ describe(`${RentCar.name}`, () => {
         //BEFORE
         const driver = new DriverDto();
         driver.id = uuidv4()
+        driver.license ="123456";
         driver.name = 'John';
         driver.age = 36;
 

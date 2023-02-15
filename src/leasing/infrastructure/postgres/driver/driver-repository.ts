@@ -5,10 +5,13 @@ import Driver from "../../../application-core/driver/domain/driver";
 import {Repository} from "typeorm";
 import DriverDto from "./driver-dto";
 import CarDto from "../car/car-dto";
+import Car from "../../../application-core/car/domain/car";
+import CarId from "../../../shared-kernel/domain/car-id";
+import {DriverMapper} from "./driver-mapper";
 
 export default class DriverPgRepository implements DriverRepository {
 
-    constructor(private driverDao: Repository<DriverDto>) {
+    constructor(private driverDao: Repository<DriverDto>, private mapper: DriverMapper) {
     }
 
 
@@ -20,7 +23,7 @@ export default class DriverPgRepository implements DriverRepository {
             relations: ['car']
 
         })
-        return Driver.create(new DriverId(driver.id), driver.name, "123", driver.age);
+        return this.mapper.toDomain(driver);
 
     }
 
@@ -38,6 +41,28 @@ export default class DriverPgRepository implements DriverRepository {
         await this.driverDao.save(driverToUpdate);
     }
 
+    async create(driver: Driver): Promise<Driver> {
 
+        const driverDto = new DriverDto();
+        driverDto.id = driver.driverId.id;
+        driverDto.name = driver.name;
+        driverDto.license = driver.licenseNumber;
+        driverDto.age = driver.age;
+        await this.driverDao.save(driverDto);
+
+        return Promise.resolve(driver);
+    }
+
+    async findByLicense(license: string): Promise<Driver> {
+        const driverDto = await this.driverDao.findOne({
+            where: {
+                license: license,
+            },
+            relations: ['car']
+
+        })
+
+        return this.mapper.toDomain(driverDto);
+    }
 
 }
