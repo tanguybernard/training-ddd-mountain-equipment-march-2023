@@ -30,8 +30,13 @@ AppDataSource.initialize().then(async () => {
 
 }).catch(error => console.log(error))
 
-DomainEvents.register(new CarRentedEventHandler(LeasingFactory.carRepository()), CarRentedEvent.name);
 
+
+/**  -----------IMPORT SUBSCRIBERS FOR DOMAIN EVENTS------------ ***/
+
+import "./leasing/subscribers";
+
+/**  ----------------------- ***/
 
 
 

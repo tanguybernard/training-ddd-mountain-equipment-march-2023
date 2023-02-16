@@ -13,6 +13,10 @@ import CarPgRepository from "../../../infrastructure/postgres/car/car-repository
 import CarDao from "../../../infrastructure/postgres/car/car-dao";
 import CarRentedEvent from "../domain/events/car-rented-event";
 
+import "../../../subscribers"
+
+
+//FIX its an integration test, real database even if tis memory ?
 describe(`${RentCar.name}`, () => {
     let useCase: RentCar;
     beforeAll(async () => {
@@ -48,7 +52,10 @@ describe(`${RentCar.name}`, () => {
             .save(driver)
         await AppDataSource.getRepository(CarDto)
             .save(car);
-        DomainEvents.register(new CarRentedEventHandler(new CarPgRepository(CarDao)), CarRentedEvent.name);
+
+
+        //DomainEvents.register(new CarRentedEventHandler(new CarPgRepository(CarDao)), CarRentedEvent.name);
+
 
         //WHEN
         await useCase.rentCar(new DriverId(driver.id), new CarId(car.id));

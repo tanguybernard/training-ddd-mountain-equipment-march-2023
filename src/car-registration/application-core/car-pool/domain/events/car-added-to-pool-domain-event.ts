@@ -1,10 +1,11 @@
 import {DomainEvent} from "../../../../../shared-kernel/domain-event-dispatching/domain-event";
-import CarPoolId from "../car-pool-id";
+import CarId from "../../../../../leasing/shared-kernel/domain/car-id";
+import {ValueObjectId} from "../../../../../shared-kernel/value-object-id";
 
 //TODO usefull ?
 export default class CarAddedToPoolDomainEvent implements DomainEvent{
 
-    constructor(private aggregateId: CarPoolId) {
+    constructor(private aggregateId: CarId) {
     }
 
     get eventName(): string {
@@ -13,6 +14,10 @@ export default class CarAddedToPoolDomainEvent implements DomainEvent{
 
     get occurredOn(): Date {
         return new Date();
+    }
+
+    getAggregateId(): ValueObjectId<any> {
+        return this.aggregateId;
     }
 
 }
