@@ -1,0 +1,13 @@
+@startuml
+
+class Car {
+  {field} String vin
+  {method} create
+}
+
+class Driver {
+    {field} String name
+    {field} age
+}
+
+@enduml

@@ -10,3 +10,13 @@ services:
       - POSTGRES_DB=mydb
     #volumes:
       #- ./db-init-scripts:/docker-entrypoint-initdb.d
+  ## guest/guest
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq

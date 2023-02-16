@@ -1,0 +1,30 @@
+@startmindmap
+'https://plantuml.com/mindmap-diagram
+
+caption Event
+title Leasing Car Project
+
+* Driver Connected
+** Car Selected
+*** Rent duration selected
+**** Car Rented
+***** Car Released
+****** Car Available
+
+* Agent Connected
+** Car Added
+*** Car can be Rented
+*** Car cannot be Rented
+** Car Removed
+
+header
+My super header
+endheader
+
+center footer My super footer
+
+legend right
+  Short
+  legend
+endlegend
+@endmindmap

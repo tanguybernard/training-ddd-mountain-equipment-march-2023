@@ -23,7 +23,7 @@ export const AppDataSource =
             username: DB_USER,
             password: DB_PASSWORD,
             database: "mydb",
-            synchronize: true,
+            synchronize: false,
             logging: false,
             entities: [CarDto, DriverDto, CarLeasingDto],
             subscribers: [],

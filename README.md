@@ -46,13 +46,25 @@ See: CarRentedEvent
 
 ## Command
 
-Run integration test with sqlite memory (db)
+Run integration test with sqlite memory (db) (no need to up docker-compose)
 
     npm run test:integration
 
 Run unit test
 
     npm run test
+
+
+## Services
+
+### Api
+
+http://localhost:3000/hello/world
+
+### RabbitMq
+
+http://localhost:15673/#/queues
+
 
 ## Credits
 
@@ -90,3 +102,10 @@ Domain event vs Integration event:
 https://devblogs.microsoft.com/cesardelatorre/domain-events-vs-integration-events-in-domain-driven-design-and-microservices-architectures/
 
 https://github.com/kgrzybek/modular-monolith-with-ddd
+
+
+RabbitMQ
+
+https://dev.to/omardiaa48/microservices-with-expressjs-and-rabbitmq-34dk
+
+https://geshan.com.np/blog/2021/07/rabbitmq-docker-nodejs/
