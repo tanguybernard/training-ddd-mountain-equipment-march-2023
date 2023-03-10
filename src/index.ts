@@ -2,16 +2,6 @@ import 'module-alias/register';
 import {initServer} from "./app";
 import { PORT, AMQP_URL } from './env';
 import {AppDataSource} from "./data-source";
-import {DomainEvents} from "./shared-kernel/domain-event-dispatching/domain-events";
-import CarRentedEvent from "./leasing/application-core/driver/domain/events/car-rented-event";
-import CarRentedEventHandler
-    from "./leasing/application-core/car/application/event-handlers/car-rented-event-handler";
-import CarPgRepository from "./leasing/infrastructure/postgres/car/car-repository";
-import CarDto from "./leasing/infrastructure/postgres/car/car-dto";
-import CarDao from "./leasing/infrastructure/postgres/car/car-dao";
-import LeasingFactory from "./leasing/leasing-factory";
-
-import amqplib, { Channel, Connection } from 'amqplib'
 
 AppDataSource.initialize().then(async () => {
 
@@ -83,36 +73,14 @@ const server =  initServer().listen(PORT, () => {
 
 
 connect()
-let channel: Channel, connection: Connection
+
 
 // connect to rabbitmq
 async function connect() {
     try {
         // rabbitmq default port is 5672
         const amqpServer = AMQP_URL || 'amqp://localhost:5673';
-        connection = await amqplib.connect(amqpServer)
-        channel = await connection.createChannel()
 
-        // make sure that the order channel is created, if not this statement will create it
-        await channel.assertQueue('order')
-
-
-        // consume all the orders that are not acknowledged
-        await channel.consume('order', (data) => {
-            console.log(`Received ${Buffer.from(data!.content)}`)
-            channel.ack(data!);
-        })
-
-
-        channel.sendToQueue(
-            'order',
-            Buffer.from(
-                JSON.stringify({
-                    msg: "Hello From TS DDD PROJECT",
-                    date: new Date(),
-                }),
-            ),
-        )
 
     } catch (error) {
         console.log(error)
